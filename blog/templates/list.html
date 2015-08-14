@@ -1,0 +1,43 @@
+<!DOCTYPE>
+<html>
+{% load staticfiles %}
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css"/>
+</head>
+
+<body>
+
+<h1></h1>
+<a href="write">Clcik to write</p>
+<div id="content">
+    {% for entry in entries %}
+
+    <div class="post_entry">
+        <h3 id="post_" class="post_title"><a href="/entry/{{entry.id}}"> Title:{{entry.Title}}   by {{entry.User}}</a></h3>
+
+        <p class="post_info">Category:  [{{entry.Category.Title}}] / </p>
+
+        <div class="content_box">{{entry.Content}}</div>
+
+        <ul class="post_meta">
+            <li>Tag : {% for tag in entry.Tags.all %}
+            <span>{{tag.Title}}</span>
+            {% endfor %}</li>
+            <li><a href="/get_comments/{{entry.id}}">Comments: ({{entry.Comments}})</a></li>
+        </ul>
+
+    </div>
+
+    {% endfor %}
+</div>
+
+
+
+<div id="sidebar"></div>
+
+
+</body>
+
+</html>

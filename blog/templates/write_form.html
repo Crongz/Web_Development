@@ -1,0 +1,32 @@
+<!DOCTYPE html>	
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+<h1>{{page_title}}</h1>
+
+	<form method="post" action="/add/post/" enctype="multipart/form-data">  
+		{% csrf_token %}
+		<p><label for="title">제목</label><input type="text" id="title" name="title" value="" /></p>
+		<p><label for="category">글 갈래</label><select name="category" id="category">
+			{% for category in categories %}
+			<option value="{{category.id}}">{{category.Title}}</option>
+			{% endfor %}
+		</select>
+		</p>
+		<p><label for="tags">글 꼬리표</label><input type="text" id="tags" name="tags" value="" /></p>
+		<p><textarea id="content" name="content"></textarea></p>
+			
+		
+
+		
+                <p>
+                    <input id="id_image" type="file" class="" name="image">
+                </p>
+
+		<p><input type="submit" value="submit" /></p>
+         </form>
+	
+</body>
+</html>
