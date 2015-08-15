@@ -28,6 +28,9 @@ def login_user(request):
     context = {'username': username, 'state': state}
     return render(request,'login.html', context)
 
+def logout_user(request):
+    logout(request)
+    return redirect('/')
 
 def index(request, page=1):
 
