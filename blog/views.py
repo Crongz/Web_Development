@@ -1,11 +1,26 @@
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse, HttpResponseRedirect
-from blog.models import Entries, Categories, TagModel, Comments
-from django.shortcuts import render,redirect
+from blog.models import *
+from django.shortcuts import render,redirect,render_to_response
 from blog.forms import ImageUploadForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+from django.template import RequestContext
+
 import md5
 
+def login_user(request):
+    logout(request)
+    username = password = ''
+    if request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect('/write/')
+    return render(request,'login.html', context_instance=RequestContext(request))
 
 def index(request, page=1):
 
@@ -22,7 +37,7 @@ def index(request, page=1):
         'entries':entries,
         'current_page':page
     }
-    return render(request, 'list.html', context)
+    return render(request, 'main.html', context)
 
 def read(request, entry_id=None):
     page_title = '블로그 글 읽기 화면'
@@ -53,7 +68,7 @@ def read(request, entry_id=None):
     }
     return render(request, 'read.html', context)
 
-@login_required
+@login_required(login_url = '/login/')
 def write_form(request):
     page_title = '블로그 글 쓰기 화면'
     

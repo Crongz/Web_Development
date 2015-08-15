@@ -11,16 +11,14 @@
     <meta name="author" content="James W. Lee">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Mini Reddit</title>
+    <title>Mini-Reddit</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css"/>
 </head>
-
 <body>
-
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse">
         <div class="container">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -29,44 +27,46 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">Project name</a>
+              <a class="navbar-brand" href="/">Mini-Reddit</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
               <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-              </ul>
-            </div><!--/.nav-collapse -->
+                <li><a href="/write">Write</a></li>
+		<li><a href="/register">Sign Up</a><li>
+	      </ul>
+ 	      <form  method="post" action="/login/" name="LoginForm" class="navbar-form navbar-right">
+		{% csrf_token %}
+            	<div class="form-group">
+                <input type="text" id="username" name="username" placeholder="Email" class="form-control">
+                </div>
+            	<div class="form-group">
+                <input type="password" name="password" id="password" placeholder="Password" class="form-control">
+                </div>
+                <button type="submit" class="btn">Sign in</button>
+              </form>
+            </div>
         </div>
-    </nav>
-    
-    <a href="write">Clcik to write</p>
-    <div id="content">
+   </nav>
+   <div class="container"> 
         {% for entry in entries %}
-
         <div class="post_entry">
-            <h3 id="post_" class="post_title"><a href="/entry/{{entry.id}}"> Title:{{entry.Title}}   by {{entry.User}}</a></h3>
-
-            <p class="post_info">Category:  [{{entry.Category.Title}}] / </p>
-
-            <div class="content_box">{{entry.Content}}</div>
-
-            <ul class="post_meta">
-                <li>Tag : {% for tag in entry.Tags.all %}
+            <p><a href="/entry/{{entry.id}}"> Title:{{entry.Title}}   by {{entry.User}}</a></p>
+            <p>Category:  [{{entry.Category.Title}}] / </p>
+            <p class="content_box">{{entry.Content}}</p>
+            <p>Tag : {% for tag in entry.Tags.all %}
                 <span>{{tag.Title}}</span>
-                {% endfor %}</li>
-                <li><a href="/get_comments/{{entry.id}}">Comments: ({{entry.Comments}})</a></li>
-            </ul>
-
+                {% endfor %}</p>
+           <div><a href="/get_comments/{{entry.id}}">Comments: ({{entry.Comments}})</a></div>
         </div>
-
         {% endfor %}
     </div>
 
 
 
-    <div id="sidebar"></div>
-</body>
 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
 </html>
