@@ -1,19 +1,8 @@
-<!DOCTYPE>
-<html lang = "en">
 {% load staticfiles %}
 <div id="login">
-	{% if form.errors %}
-		<p>ID나 비밀번호가 일치하지 않습니다.</p>
-	{% endif %}
-
-	{% if next %}
-    		{% if user.is_authenticated %}
-    		<p>권한이 없는 페이지에 접근하였으니, 권한이 있는 계정으로 로그인하세요.</p>
-    		{% else %}
-    		<p>이 페이지를 보려면 로그인을 해야 합니다.</p>
-    		{% endif %}
-        {% endif %}
-
+	{% autoescape off %}
+	{{state}}
+	{% endautoescape %}
         <form class="form-horizontal" name="LoginForm" action="/login/" method="post">
         {% csrf_token %}
         {% if next %}
@@ -38,4 +27,6 @@
         </div>
         </form>
 </div>
-</html>
+<div>
+	<a href="/sign_up/" class =" btn btn-info" role="button">Sign up</a>
+</div>

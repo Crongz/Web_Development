@@ -12,6 +12,7 @@ import md5
 def login_user(request):
     logout(request)
     username = password = ''
+    state = 'Please log in to write a post on Mini-reddit'
     if request.POST:
         username = request.POST['username']
         password = request.POST['password']
@@ -20,7 +21,13 @@ def login_user(request):
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect('/write/')
-    return render(request,'login.html', context_instance=RequestContext(request))
+	    else:
+		state = 'Use user with admin control'
+	else:
+	    state = 'Invaild Password or Username. Please try it again.'
+    context = {'username': username, 'state': state}
+    return render(request,'login.html', context)
+
 
 def index(request, page=1):
 
