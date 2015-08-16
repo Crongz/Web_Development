@@ -29,5 +29,7 @@ urlpatterns = [
     url(r'^get_comments/(?P<entry_id>\d+)/$', 'blog.views.get_comments'),
     url(r'^login/$', 'blog.views.login_user'),
     url(r'^logout/$', 'blog.views.logout_user'), 
+    url(r'^add/user/$', 'blog.views.add_user'),
+    url(r'^sign_up/$', 'blog.views.sign_up'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -5,7 +5,7 @@ from django.shortcuts import render,redirect,render_to_response
 from blog.forms import ImageUploadForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from django.template import RequestContext
+from django.contrib.auth.models import User
 
 import md5
 
@@ -31,6 +31,72 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('/')
+
+def sign_up(request):
+    return render(request, 'signup_form.html')
+
+def add_user(request):
+    # 글쓴이 이름 처리
+    if request.POST.has_key('username') == False:
+        return HttpResponse('Missing name')
+    else:
+	username = request.POST['username']
+        if len(username) == 0:
+            return HttpResponse('username must be exist')
+	elif User.objects.filter(username=username).exists():
+	    return HttpResponse('someone is using this uesrname')
+        else:
+            user_username = username
+
+    # 비밀번호
+    if request.POST.has_key('password') == False:
+        return HttpResponse('Missing password')
+    else:
+        if len(request.POST['password']) == 0:
+            return HttpResponse('Password must be longer than one letter')
+        else:
+            user_password = md5.md5(request.POST['password']).hexdigest()
+
+    # Email
+    if request.POST.has_key('email') == False:
+        return HttpResponse('Missing content')
+    else:
+	email=request.POST['email']
+        if len(email) == 0:
+            return HttpResponse('Email must be longer than one letter')
+	elif User.objects.filter(email=email).exists():
+	    return HttpResponse('someone is using email') 
+        else:
+            user_email = email
+
+    # 글쓴이 이름 처리
+    if request.POST.has_key('first_name') == False:
+        return HttpResponse('Missing first name')
+    else:
+        if len(request.POST['first_name']) == 0:
+            return HttpResponse('first name  must be exist')
+        else:
+            user_first_name = request.POST['first_name']
+
+    # 글쓴이 이름 처리
+    if request.POST.has_key('last_name') == False:
+        return HttpResponse('Missing last name')
+    else:
+        if len(request.POST['last_name']) == 0:
+            return HttpResponse('last name must be exist')
+        else:
+            user_last_name = request.POST['last_name']
+    
+    try:
+        user = User.objects.create_user(username=user_username, email=user_email, password=user_password)
+	user.first_name=user_first_name
+	user.last_name=user_last_name
+	user.save()
+	return redirect('/')
+	#return HttpResponse(new_user)
+    except:
+        return HttpResponse('Error: couldnt create user')
+    return HttpResponse('Err`or: End of the program. Didnt happened anything')    
 
 def index(request, page=1):
 

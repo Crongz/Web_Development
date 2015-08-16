@@ -1,0 +1,51 @@
+{% load staticfiles %}
+<div id="login">
+	{% autoescape off %}
+	{{state}}
+	{% endautoescape %}
+        <form class="form-horizontal" name="SignUpForm" action="/add/user/" method="post">
+        {% csrf_token %}
+        {% if next %}
+            <input type="hidden" name="next" value="{{ next }}" />
+        {% endif %}
+	Hello create your account for mini-reddit
+
+
+        <div class="control-group">
+            <label class="control-label" for="first_name">First Name</label>
+            <div class="controls">
+                <input type="text" id="first_name" name="first_name"  placeholder="First Name">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="last_name">Last Name</label>
+            <div class="controls">
+                <input type="text" id="last_name" name="last_name"  placeholder="Last name">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="username">Username</label>
+            <div class="controls">
+                <input type="text" id="username" name="username"  placeholder="Username">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="email">Email</label>
+            <div class="controls">
+                <input type="text" id="email" name="email"  placeholder="Email">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+                <input type="password" name="password" id="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn">Sign Up</button>
+            </div>
+        </div>
+        </form>
+</div>
