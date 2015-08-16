@@ -1,0 +1,17 @@
+{% extends "main.html" %}
+{% block content %}
+{% load staticfiles %}
+   <div class="container"> 
+        {% for entry in entries %}
+        <div class="post_entry">
+            <p><a href="/entry/{{entry.id}}"> Title:{{entry.Title}}   by {{entry.User}}</a></p>
+            <p>Category:  [{{entry.Category.Title}}] / </p>
+            <p class="content_box">{{entry.Content}}</p>
+            <p>Tag : {% for tag in entry.Tags.all %}
+                <span>{{tag.Title}}</span>
+                {% endfor %}</p>
+           <div><a href="/get_comments/{{entry.id}}">Comments: ({{entry.Comments}})</a></div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

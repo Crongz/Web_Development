@@ -1,3 +1,5 @@
+{% extends "main.html" %}
+{% block content%}
 {% load staticfiles %}
 <div>
 	<h3><a href="/entry/{{current_entry.id}}">{{current_entry.Title}}</a></h3>	
@@ -25,4 +27,4 @@
 	<li><a href="/entry/{{next_entry.id}}">다음 글 ({{next_entry.Title}})</a></li>
 	{% endif %}
 </ul>
-
+{% endblock %}

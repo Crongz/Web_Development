@@ -20,7 +20,7 @@ def login_user(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/write/')
+                return HttpResponseRedirect('/')
 	    else:
 		state = 'Use user with admin control'
 	else:
@@ -98,6 +98,12 @@ def add_user(request):
         return HttpResponse('Error: couldnt create user')
     return HttpResponse('Err`or: End of the program. Didnt happened anything')    
 
+def status(request):
+    status=''
+    if request.user.is_authenticated():
+	status = 'Log Out'
+    return status
+
 def index(request, page=1):
 
     per_page = 10
@@ -111,9 +117,11 @@ def index(request, page=1):
     context={
         'page_title':page_title,
         'entries':entries,
-        'current_page':page
+        'current_page':page,
+	#'status':status(request),
+	#'username':request.user.username
     }
-    return render(request, 'main.html', context)
+    return render(request, 'list.html', context)
 
 def read(request, entry_id=None):
     page_title = '블로그 글 읽기 화면'
