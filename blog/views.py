@@ -55,7 +55,7 @@ def add_user(request):
         if len(request.POST['password']) == 0:
             return HttpResponse('Password must be longer than one letter')
         else:
-            user_password = md5.md5(request.POST['password']).hexdigest()
+           user_password = request.POST['password']
 
     # Email
     if request.POST.has_key('email') == False:
