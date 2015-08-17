@@ -30,8 +30,7 @@ class Entries(models.Model):
         return self.Title
 
 class Comments(models.Model):
-    Name = models.CharField(max_length=20, null=False)
-    Password = models.CharField(max_length=32, null=False)
+    User = models.ForeignKey(settings.AUTH_USER_MODEL)
     Content = models.TextField(max_length=2000, null=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)    

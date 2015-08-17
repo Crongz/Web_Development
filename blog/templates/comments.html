@@ -1,11 +1,19 @@
-	{% load staticfiles %}
-	{% if comments|length %}
-	<ul>
-	{% for comment in comments %}
-		<li>{{comment.Name}}님이 {{comment.created}}에 남긴 댓글
-		<p>{{comment.Content}}</p></li>	
-	{% endfor %}
-	</ul>
-	{% else %}
-	댓글이 없습니다.
-	{% endif %}
+{% load staticfiles %}
+<h3> Comments </h3>
+{% if comments|length %}
+<ul class="list-group">
+    {% for comment in comments %}
+    <li class="list-group-item">
+    <div class="comment-body">
+         <h4 class="comment-heading"><a href="#">{{comment.User.username}}</a>
+            <small>{{comment.created}}</small>
+        </h4>
+	{{comment.Content}}
+    </div>
+    </li>
+    {% endfor %}
+{% else %}
+    No comments.
+{% endif %}
+</ul>
+

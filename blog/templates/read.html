@@ -1,30 +1,51 @@
 {% extends "main.html" %}
 {% block content%}
 {% load staticfiles %}
-<div>
-	<h3><a href="/entry/{{current_entry.id}}">{{current_entry.Title}}</a></h3>	
-	<ul>
-		<li>{{current_entry.Category.Title}}</li>
-		<li>{% for tag in current_entry.Tags.all %}
-		<span>{{tag.Title}}</span>
-		{% endfor %}</li>
-		<li>{{current_entry.created}}</li>
-		<li>{{current_entry.Comments}}</li>
-	</ul>			
-	<div><img src="{{MEDIA_URL}}{{current_entry.Image}}"></div>	
-	<div>{{current_entry.Content}}</div>		
-</div>
+<!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Blog Post Content Column -->
+            <div class="col-md-offset-1 col-md-10">
+                <!-- Blog Post -->
+                <!-- Title -->
+                <h1>{{current_entry.Title}}</h1>
+
+                <!-- Author -->
+                <p class="lead">
+                    by <a href="#">{{current_entry.User}}</a>
+                </p>
+                <hr>
+
+                <!-- Date/Time -->
+                <p><span class="glyphicon glyphicon-time"></span> Posted on {{current_entry.created}}</p>
+                <hr>
+
+                <!-- Preview Image -->
+                <img class="img-responsive" src="{{MEDIA_URL}}{{current_entry.Image}}" alt="">
+
+                <!-- Post Content -->
+		<p>{{current_entry.Content}}</p>
+                <hr>
+		Category: {{current_entry.Category}}
+                <p>Tag : {% for tag in entry.Tags.all %}
+                <span>{{tag.Title}}</span>
+                {% endfor %}</p>
+		<hr>
+
 <div>
 {% include 'comments.html' %}
 {% include 'comment_form.html' %}
 </div>
 <ul>
 	{% if prev_entry %}
-	<li><a href="/entry/{{prev_entry.id}}">이전 글 ({{prev_entry.Title}})</a></li>
+	<li><a href="/entry/{{prev_entry.id}}">Previous Post({{prev_entry.Title}})</a></li>
 	{% endif %}
 	
 	{% if next_entry %}
-	<li><a href="/entry/{{next_entry.id}}">다음 글 ({{next_entry.Title}})</a></li>
+	<li><a href="/entry/{{next_entry.id}}">Next Post({{next_entry.Title}})</a></li>
 	{% endif %}
 </ul>
+</div>
 {% endblock %}

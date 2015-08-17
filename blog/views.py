@@ -234,7 +234,7 @@ def add_post(request):
 
 
 def add_comment(request):    
-    # 글쓴이 이름 처리
+    """ 글쓴이 이름 처리
     if request.POST.has_key('name') == False:
         return HttpResponse('Missing name')
     else:
@@ -251,7 +251,7 @@ def add_comment(request):
             return HttpResponse('Password must be longer than one letter')
         else:
             cmt_password = md5.md5(request.POST['password']).hexdigest()
-
+	"""
     # 댓글 본문 처리
     if request.POST.has_key('content') == False:
         return HttpResponse('Missing content')
@@ -271,7 +271,7 @@ def add_comment(request):
             return HttpResponse('Post does not exsit anymore')
 
     try:
-        new_cmt = Comments(Name=cmt_name, Password=cmt_password, Content=cmt_content, Entry=entry)
+        new_cmt = Comments( User=request.user, Content=cmt_content, Entry=entry)
         new_cmt.save()
         entry.Comments += 1
         entry.save()
