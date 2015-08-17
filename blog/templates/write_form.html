@@ -1,32 +1,64 @@
-<!DOCTYPE html>	
-<html>
-<head>
-<meta charset="utf-8">
-</head>
-<body>
-<h1>{{page_title}}</h1>
+{% extends "main.html" %}
+{% block content%}
+{% load staticfiles %}
 
-	<form method="post" action="/add/post/" enctype="multipart/form-data">  
-		{% csrf_token %}
-		<p><label for="title">제목</label><input type="text" id="title" name="title" value="" /></p>
-		<p><label for="category">글 갈래</label><select name="category" id="category">
-			{% for category in categories %}
-			<option value="{{category.id}}">{{category.Title}}</option>
-			{% endfor %}
-		</select>
-		</p>
-		<p><label for="tags">글 꼬리표</label><input type="text" id="tags" name="tags" value="" /></p>
-		<p><textarea id="content" name="content"></textarea></p>
-			
-		
 
-		
-                <p>
-                    <input id="id_image" type="file" class="" name="image">
-                </p>
+   <div class="container">
+  <div class="row">
+  	<div class="col-md-offset-2 col-md-8"> 
+          <form method="post" action='/add/post/' enctype="multipart/form-data">
+          <input type='hidden' name='csrfmiddlewaretoken' value='EDtIhdX7j4I8S1FzQ6GbUErmhlasSISb' />
+            <div>
+              <legend>Post at mini-reddit</legend>
+            </div>
+	{% csrf_token %}
+	<div class="control-group">
+	    <div class="controls">
+        <label class="control-label">Title</label>
+		<input type="text" name = "title" class="form-control" 
+			   placeholder="Title" id="title" required
+			   data-validation-required-message="Please enter title" />
+		  <p class="help-block"></p>
+	   </div>
+       </div> 	
+       <div class="control-group">
+	 <div class="controls">
+        <label class="control-label">Tag</label>
+		<input type="tag" name = "tag" class="form-control" placeholder="Tag" 
+				    id="tag" required
+				   data-validation-required-message="Please enter your tag" />
+		<p class="help-block"></p>
+        </div>
+       </div> 		 
+       <div class="control">
+       <div class="form-group">
+        <label class="control-label">Category</label>
+  	<select class="form-control" name ="category" id="cateogry">
+		{% for category in categories %}
+		<option value="{{category.id}}">{{category.Title}}</option>
+		{% endfor %}
+  	</select>
+      </div>
+	</div>
+       <div class="control-group">
+	 <div class="controls">
+        <label class="control-label">Content</label>
+			 <textarea id="content" name="content" rows="10" cols="100" class="form-control" 
+	       placeholder="Message" id="message" required
+	       data-validation-required-message="Please enter your message" minlength="5" 
+	       data-validation-minlength-message="Min 5 characters" 
+		maxlength="999" style="resize:none"></textarea>
+		<p class="help-block"></p>
+	</div>
+       </div> 		 
+        <p>
+	    <input id="id_image" type="file" class="" name="image">
+	</p>
+     <div id="success"> </div> <!-- For success/fail messages -->
+    <button type="submit" class="btn btn-primary pull-right">Post</button><br />
+  </form>
+</div>
+</div>
+</div>
+{% endblock %}
 
-		<p><input type="submit" value="submit" /></p>
-         </form>
-	
-</body>
-</html>

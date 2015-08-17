@@ -209,6 +209,7 @@ def add_post(request):
             entry_image=request.FILES['image']
 	    new_entry = Entries(User = entry_user, Title=entry_title, Content=entry_content, Category=entry_category, Image=entry_image)
     	else:
+	    entry_user = request.user
             new_entry = Entries(User = entry_user, Title=entry_title, Content=entry_content, Category=entry_category)
     
     #꼬리표 임시추가 

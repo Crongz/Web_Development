@@ -1,35 +1,46 @@
 {% load staticfiles %}
 <!DOCTYPE>
 <html>
+
+<head>
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Mini reddit by using Django">
+    <meta name="author" content="James W. Lee">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Mini-Reddit</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css"/>
+</head>
+<body>
 <div id="login">
-	{% autoescape off %}
-	{{state}}
-	{% endautoescape %}
-        <form class="form-horizontal" name="LoginForm" action="/login/" method="post">
-        {% csrf_token %}
-        {% if next %}
-            <input type="hidden" name="next" value="{{ next }}" />
-        {% endif %}
-        <div class="control-group">
-            <label class="control-label" for="username">Username</label>
-            <div class="controls">
-                <input type="text" id="username" name="username"  placeholder="Username">
-            </div>
+
+    <div class="container">
+      <form class="form-signin" name ="LoginForm" action="/login/" method= "post">
+	{% csrf_token %}
+        <h2 class="form-signin-heading">{{state}}</h2>
+	<div>
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input type="username" name="username" id="username" class="form-control" placeholder="Username" required>
+	</div>
+	<div>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+	</div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
         </div>
-        <div class="control-group">
-            <label class="control-label" for="password">Password</label>
-            <div class="controls">
-                <input type="password" name="password" id="password" placeholder="Password">
-            </div>
-        </div>
-        <div class="control-group">
-            <div class="controls">
-                <button type="submit" class="btn">Login</button>
-            </div>
-        </div>
-        </form>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+
 </div>
-<div>
-	<a href="/sign_up/" class =" btn btn-info" role="button">Sign up</a>
-</div>
+</body>
 </html>
