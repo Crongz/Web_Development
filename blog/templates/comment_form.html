@@ -1,17 +1,16 @@
 {% if user.is_authenticated%}
 <div class="well">
-                    <h4>Leave a Comment:</h4>
-		    <form method="post" action="/add/comment/"> {% csrf_token %}
-		<input type="hidden" name="entry_id" value="{{current_entry.id}}" />
-                        <div class="form-group">
-                            <textarea id = "content" name ="content" class="form-control" rows="3"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Comment</button>
-                    </form>
-                </div>
-                <hr>
+    <h4>Leave a Comment:</h4>
+    <form method="post" action="/add/comment/"> {% csrf_token %}
+        <input type="hidden" name="entry_id" value="{{current_entry.id}}" />
+        <!-- Comment Content -->
+        <div class="form-group">
+            <textarea id="content" name="content" class="form-control" rows="3">
+            </textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Comment</button>
+    </form>
+</div>
 {% else %}
-	<h4><strong> Login to leave a Comment </strong></h4>
+	<h4><strong> Login to leave a Comment </strong></h4> 
 {% endif %}
-
-

@@ -1,13 +1,19 @@
 {% extends "main.html" %}
 {% block content %}
 {% load staticfiles %}
-<div class="container"> 
+
+<div class="container">
+	<!-- Entry in for loop-->  
     {% for entry in entries %}
     <div class="post post-green">
         <strong><a href="/entry/{{entry.id}}"> {{entry.Title}} </strong></a> by <a href="">{{entry.User}} </a>
-	<div>Created: {{entry.created}}</div>
-        <div><a href="/get_comments/{{entry.id}}">{{entry.Comments}} comments</a></div>
+		<!-- Created Date-->  
+        <div>Created: {{entry.created}}</div>
+		<!-- Number of comments-->  
+        <div>
+        	<a href="/get_comments/{{entry.id}}">{{entry.Comments}} comments</a>
+        </div>
     </div>
-        {% endfor %}
+    {% endfor %}
 </div>
 {% endblock %}

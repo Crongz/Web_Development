@@ -2,52 +2,52 @@
 {% block content%}
 {% load staticfiles %}
 <!-- Page Content -->
-    <div class="container">
-
-        <div class="row">
-
-            <!-- Blog Post Content Column -->
-            <div class="col-md-offset-1 col-md-10">
-                <!-- Blog Post -->
-                <!-- Title -->
-                <h1>{{current_entry.Title}}</h1>
-
-                <!-- Author -->
-                <p class="lead">
-                    by <a href="#">{{current_entry.User}}</a>
-                </p>
+<div class="container">
+    <div class="row">
+        <!-- Mini Reddit Post Content Column -->
+        <div class="col-md-offset-1 col-md-10">
+            <!-- Mini Reddit Post -->
+            <!-- Title -->
+            <h1>{{current_entry.Title}}</h1>
+            <!-- Author -->
+            <p class="lead">
+                by <a href="#">{{current_entry.User}}</a>
+            </p>
+            <hr>
+            <!-- Mini Reddit created Date -->
+            <p><span class="glyphicon glyphicon-time"></span> Posted on {{current_entry.created}}</p>
+            <hr>
+            <!-- Preview Image -->
+            {% if not current_entry.Image == '' %}
+            <img class="img-responsive" src="{{MEDIA_URL}}{{current_entry.Image}}" alt=""> 
+            {% endif %}
+            <!-- Mini Reddit Content -->
+            <p>{{current_entry.Content}}</p>
+            <hr>
+            <p><strong>Category:</strong> {{current_entry.Category}}</p>
+            <p><strong>Tag :</strong> {% for tag in current_entry.Tags.all %} {{tag.Title}}, {% endfor %}</p>
+            <!-- Comments -->
+            <hr>
+            <div>
+                {% include 'comments.html' %}
                 <hr>
-
-                <!-- Date/Time -->
-                <p><span class="glyphicon glyphicon-time"></span> Posted on {{current_entry.created}}</p>
-                <hr>
-
-                <!-- Preview Image -->
-		{% if not current_entry.Image == '' %}
-                <img class="img-responsive" src="{{MEDIA_URL}}{{current_entry.Image}}" alt="">
-		{% endif %}
-                <!-- Post Content -->
-		<p>{{current_entry.Content}}</p>
-                <hr>
-		<p><strong>Category:</strong> {{current_entry.Category}}</p>
-                <p><strong>Tag :</strong> {% for tag in current_entry.Tags.all %}
-        	{{tag.Title}},
-        	{% endfor %}</p>
-		<hr>
-
-<div>
-{% include 'comments.html' %}
-<hr>
-{% include 'comment_form.html' %}
-</div>
-<ul>
-	{% if prev_entry %}
-	<li><a href="/entry/{{prev_entry.id}}">Previous Post({{prev_entry.Title}})</a></li>
-	{% endif %}
-	
-	{% if next_entry %}
-	<li><a href="/entry/{{next_entry.id}}">Next Post({{next_entry.Title}})</a></li>
-	{% endif %}
-</ul>
+                {% include 'comment_form.html' %}
+            </div>
+            <hr>
+            <!-- Previous & Next post -->
+            <ul>
+                {% if prev_entry %}
+                <li>
+                    <a href="/entry/{{prev_entry.id}}">Previous Post({{prev_entry.Title}})</a>
+                </li>
+                {% endif %}
+                {% if next_entry %}
+                <li>
+                    <a href="/entry/{{next_entry.id}}">Next Post({{next_entry.Title}})</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
 </div>
 {% endblock %}
