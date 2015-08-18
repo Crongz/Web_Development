@@ -17,6 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -31,5 +32,20 @@ urlpatterns = [
     url(r'^logout/$', 'blog.views.logout_user'), 
     url(r'^add/user/$', 'blog.views.add_user'),
     url(r'^sign_up/$', 'blog.views.sign_up'),
+    url(r'^reset/password_form/$', 'django.contrib.auth.views.password_reset', 
+        {'template_name': 'reset_password/reset_password_form.html',
+	'post_reset_redirect' : '/reset/password_sent'}, name='password_reset'),
+
+    url(r'^reset/password_sent/$','django.contrib.auth.views.password_reset_done',
+	{'template_name':'reset_password/reset_password_sent.html'},name='password_reset_sent'),
+
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
+	'django.contrib.auth.views.password_reset_confirm',
+	name='password_reset_confirm'),
+
+    url(r'^rest/password/complete/$', 
+        'django.contrib.auth.views.password_reset_complete',
+	name='password_reset_complete'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -23,19 +23,21 @@
                 <hr>
 
                 <!-- Preview Image -->
+		{% if not current_entry.Image == '' %}
                 <img class="img-responsive" src="{{MEDIA_URL}}{{current_entry.Image}}" alt="">
-
+		{% endif %}
                 <!-- Post Content -->
 		<p>{{current_entry.Content}}</p>
                 <hr>
-		Category: {{current_entry.Category}}
-                <p>Tag : {% for tag in entry.Tags.all %}
-                <span>{{tag.Title}}</span>
-                {% endfor %}</p>
+		<p><strong>Category:</strong> {{current_entry.Category}}</p>
+                <p><strong>Tag :</strong> {% for tag in current_entry.Tags.all %}
+        	{{tag.Title}},
+        	{% endfor %}</p>
 		<hr>
 
 <div>
 {% include 'comments.html' %}
+<hr>
 {% include 'comment_form.html' %}
 </div>
 <ul>

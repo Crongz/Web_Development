@@ -1,3 +1,5 @@
+{% extends "main.html" %}
+{% block content %}
 {% load staticfiles %}
 <h3> Comments </h3>
 {% if comments|length %}
@@ -16,3 +18,4 @@
     No comments.
 {% endif %}
 </ul>
+{% endblock %}

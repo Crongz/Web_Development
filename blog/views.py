@@ -12,7 +12,7 @@ import md5
 def login_user(request):
     logout(request)
     username = password = ''
-    state = 'Please log in to write a post on Mini-reddit'
+    state = 'Please login to write a post on Mini-reddit'
     if request.POST:
         username = request.POST['username']
         password = request.POST['password']
@@ -49,43 +49,22 @@ def add_user(request):
             user_username = username
 
     # 비밀번호
-    if request.POST.has_key('password') == False:
-        return HttpResponse('Missing password')
-    else:
-        if len(request.POST['password']) == 0:
-            return HttpResponse('Password must be longer than one letter')
-        else:
-           user_password = request.POST['password']
+    user_password = request.POST['inputPassword']
 
     # Email
-    if request.POST.has_key('email') == False:
-        return HttpResponse('Missing content')
-    else:
-	email=request.POST['email']
-        if len(email) == 0:
+    email=request.POST['email']
+    if len(email) == 0:
             return HttpResponse('Email must be longer than one letter')
-	elif User.objects.filter(email=email).exists():
+    elif User.objects.filter(email=email).exists():
 	    return HttpResponse('someone is using email') 
-        else:
+    else:
             user_email = email
 
     # 글쓴이 이름 처리
-    if request.POST.has_key('first_name') == False:
-        return HttpResponse('Missing first name')
-    else:
-        if len(request.POST['first_name']) == 0:
-            return HttpResponse('first name  must be exist')
-        else:
-            user_first_name = request.POST['first_name']
+    user_first_name = request.POST['first_name']
 
     # 글쓴이 이름 처리
-    if request.POST.has_key('last_name') == False:
-        return HttpResponse('Missing last name')
-    else:
-        if len(request.POST['last_name']) == 0:
-            return HttpResponse('last name must be exist')
-        else:
-            user_last_name = request.POST['last_name']
+    user_last_name = request.POST['last_name']
     
     try:
         user = User.objects.create_user(username=user_username, email=user_email, password=user_password)
@@ -97,6 +76,10 @@ def add_user(request):
     except:
         return HttpResponse('Error: couldnt create user')
     return HttpResponse('Err`or: End of the program. Didnt happened anything')    
+
+def reset_password_form(request):
+    return render(request, 'reset_password/reset_password_form.html')
+
 
 def status(request):
     status=''
@@ -118,8 +101,6 @@ def index(request, page=1):
         'page_title':page_title,
         'entries':entries,
         'current_page':page,
-	#'status':status(request),
-	#'username':request.user.username
     }
     return render(request, 'list.html', context)
 
@@ -234,24 +215,6 @@ def add_post(request):
 
 
 def add_comment(request):    
-    """ 글쓴이 이름 처리
-    if request.POST.has_key('name') == False:
-        return HttpResponse('Missing name')
-    else:
-        if len(request.POST['name']) == 0:
-            return HttpResponse('Name must be exist')
-        else:
-            cmt_name = request.POST['name']
-
-    # 비밀번호
-    if request.POST.has_key('password') == False:
-        return HttpResponse('Missing password')
-    else:
-        if len(request.POST['password']) == 0:
-            return HttpResponse('Password must be longer than one letter')
-        else:
-            cmt_password = md5.md5(request.POST['password']).hexdigest()
-	"""
     # 댓글 본문 처리
     if request.POST.has_key('content') == False:
         return HttpResponse('Missing content')
@@ -299,7 +262,7 @@ def get_comments(request, entry_id=None, is_inner=False):
         'comments':comments,
         'with_layout':with_layout
     }
-    return render(request,'comments.html',context)
+    return render(request,'comments_only.html',context)
 
 def is_ajax(request):
     if dir(request).count('is_ajax') > 0:

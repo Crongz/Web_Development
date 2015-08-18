@@ -20,10 +20,9 @@
 </head>
 <body>
 <div id="login">
-    <div class="container">
+<div class="container">
  <div class="row">
-  	<div class="col-md-offset-3 col-md-6"> 
-
+  <div class="col-md-offset-3 col-md-6"> 
       <form class="form-signin" name ="LoginForm" action="/login/" method= "post">
 	{% csrf_token %}
         <h2 class="form-signin-heading">{{state}}</h2>
@@ -37,14 +36,18 @@
         <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
                 <p class="help-block"></p>
 	</div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
+	<div>
+	  <p class="col-xs-6 text-left" style ="padding-left: 0px;"><a href="/reset/password_form/">Forgot password?</a></p>
+	  <p class="col-xs-6 text-right" style="padding-right: 0px;"><a href="/account/username_search">Forgot username?</a></p>
+	</div>
+        <div>
+          <label><input type="checkbox" value="remember-me"> Remember me</label>
+	</div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>
-</div></div></div>
+  </div>
+ </div>
+</div>
 </div>
 </body>
 </html>
