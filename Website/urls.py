@@ -41,11 +41,11 @@ urlpatterns = [
 
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
 	'django.contrib.auth.views.password_reset_confirm',
-	name='password_reset_confirm'),
+	{'template_name':'reset_password/reset_password_confirm.html'},name='password_reset_confirm'),
 
-    url(r'^rest/password/complete/$', 
+    url(r'^rest/password_complete/$', 
         'django.contrib.auth.views.password_reset_complete',
-	name='password_reset_complete'),
+	{'template_name':'reset_password/reset_password_complete.html'},name='password_reset_complete'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
