@@ -25,7 +25,7 @@
             <p>{{current_entry.Content}}</p>
             <hr>
             <p><strong>Category:</strong> {{current_entry.Category}}</p>
-            <p><strong>Tag :</strong> {% for tag in current_entry.Tags.all %} {{tag.Title}}, {% endfor %}</p>
+            <p><strong>Tag :</strong> {% for tag in current_entry.Tags.all %} {{tag.Title}} {% endfor %}</p>
             <!-- Comments -->
             <hr>
             <div>

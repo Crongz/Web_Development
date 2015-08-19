@@ -1,0 +1,18 @@
+{% extends "main.html" %}
+{% block content %}
+{% load staticfiles %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8" style="padding-top:5%;text-align: center;">
+            <div class="well">
+<form method="POST">{% csrf_token %}
+    <h4><b>Are you sure you want to delete "{{ object.Title }}" ?</b></h4>
+        <div class="form-group" style="padding-top:5%;">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+</form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

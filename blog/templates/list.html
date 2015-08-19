@@ -13,6 +13,11 @@
         <div>
         	<a href="/get_comments/{{entry.id}}">{{entry.Comments}} comments</a>
         </div>
+		<!-- Delete Post -->
+	<div>
+		<a href="update/post/{{entry.id}}">Edit</a>
+		<a href="delete/post/{{entry.id}}">Delete</a>
+	</div>
     </div>
     {% endfor %}
 </div>

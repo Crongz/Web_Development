@@ -4,7 +4,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
-            <form method="post" action='/add/post/' enctype="multipart/form-data">
+            <form method="post" action='/update/post/complete/' enctype="multipart/form-data">
+                <input type='hidden' name='entry_id' value={{current_entry.id}} />
                 <input type='hidden' name='csrfmiddlewaretoken' value='EDtIhdX7j4I8S1FzQ6GbUErmhlasSISb' />
                 <div>
                     <legend>Post at mini-reddit</legend>
@@ -14,7 +15,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="control-label">Title</label>
-                        <input type="text" name="title" class="form-control" placeholder="Title" id="title" required data-validation-required-message="Please enter title" />
+                        <input type="text" name="title" class="form-control" placeholder="Title" value="{{current_entry.Title}}" id="title" required data-validation-required-message="Please enter title" />
                         <p class="help-block"></p>
                     </div>
                 </div>
@@ -22,26 +23,31 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="control-label">Tag</label>
-                        <input type="tags" name="tags" class="form-control" placeholder="Tag" id="tags"/>
-                        <p class="help-block"></p>
+                        <input type="tags" name="tags" class="form-control" placeholder="Tag" value="{% for tag in current_entry.Tags.all %} {{tag.Title}} {% endfor %}" id="tags"/>
+                        <p class="help-block">Split tags by using space ex)tag1 tag2 tag3</p>
                     </div>
                 </div>
                 <!-- Input Category required-->  
                 <div class="control">
                     <div class="form-group">
-                        <label class="control-label">Category</label>
+                        <label class="control-label">Category{{current_category}}</label>
                         <select class="form-control" name="category" id="cateogry">
                             {% for category in categories %}
-                            <option value="{{category.id}}">{{category.Title}}</option>
+				{% if current_entry.Category.Title == category.Title %}
+                            		<option value="{{category.id}}" selected>{{category.Title}}</option>
+				{% else %}
+                            		<option value="{{category.id}}">{{category.Title}}</option>
+				{% endif %}
                             {% endfor %}
                         </select>
                     </div>
                 </div>
+		
                 <!-- Input Content required-->  
                 <div class="control-group">
                     <div class="controls">
                         <label class="control-label">Content</label>
-                        <textarea id="content" name="content" rows="10" cols="100" class="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter your message" minlength="5" data-validation-minlength-message="Min 5 characters" maxlength="999" style="resize:none"></textarea>
+                        <textarea id="content" name="content" rows="10" cols="100" class="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter your message" minlength="5" data-validation-minlength-message="Min 5 characters" maxlength="999" style="resize:none">{{current_entry.Content}}</textarea>
                         <p class="help-block"></p>
                     </div>
                 </div>
@@ -59,3 +65,4 @@
     </div>
 </div>
 {% endblock %}
+

@@ -1,13 +1,80 @@
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse, HttpResponseRedirect
-from blog.models import *
-from django.shortcuts import render,redirect,render_to_response
-from blog.forms import ImageUploadForm
+from django.shortcuts import render,redirect, get_object_or_404
+from django.forms import ModelForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-
+from blog.forms import ImageUploadForm
+from blog.models import *
 import md5
+
+def delete_post (request, entry_id=None):
+    try:
+    	entry = get_object_or_404(Entries, id=int(entry_id))    
+    except:
+        return HttpResponse('Post does not exist anymore')
+    if request.method=='POST':
+        entry.delete()
+        return HttpResponseRedirect('/')
+    return render(request, 'delete_post_form.html', {'object':entry})
+
+def update_post(request, entry_id=None):
+    try:
+    	entry = get_object_or_404(Entries, id=int(entry_id))    
+    except:  
+        return HttpResponse('Post does not exist anymore')
+    
+    categories = Categories.objects.all()
+    context={
+        'categories':categories,
+	'current_entry':entry,
+    }
+    return render(request, 'update_post_form.html', context)
+
+def update_post_complete(request):    
+    try:
+    	entry = Entries.objects.get(id=request.POST['entry_id'])    
+    except:  
+        return HttpResponse('Post does not exist anymore %s' %request.POST['entry_id'])
+    edit_title = request.POST['title']
+    edit_content = request.POST['content']
+    edit_category = Categories.objects.get(id=request.POST['category'])
+
+    # 글 꼬리표 처리    
+    if request.POST.has_key('tags') == True:
+        tags = map(lambda str: str.strip(), unicode(request.POST['tags']).split(','))
+        tag_list = map(lambda tag: TagModel.objects.get_or_create(Title=tag)[0], tags)
+    else:
+        tag_list = []
+
+    #계정확인   &  이미지 업로드
+    if request.method == 'POST':
+	entry.Title=edit_title
+	entry.Content=edit_content
+	entry.Category=edit_category
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+	    edit_image=request.FILES['image']
+	    entry.Image=edit_image
+    
+    #꼬리표 임시추가 
+    try:
+        entry.save()
+    except:
+        return HttpResponse('Error: incomplete save for tag')
+    
+    # 꼬리표 추가
+    entry.Tags=tag_list
+
+    # 최종 저장.
+    if len(tag_list) > 0:
+        try:
+            entry.save()
+	    return redirect('/');
+        except:
+            return HttpResponse('Error: incomeplete saving')
+    return HttpResponse('Error:nothiung happened')
 
 def login_user(request):
     logout(request)
@@ -76,10 +143,6 @@ def add_user(request):
     except:
         return HttpResponse('Error: couldnt create user')
     return HttpResponse('Err`or: End of the program. Didnt happened anything')    
-
-def reset_password_form(request):
-    return render(request, 'reset_password/reset_password_form.html')
-
 
 def status(request):
     status=''
@@ -175,13 +238,13 @@ def add_post(request):
         except:
             return HttpResponse('Invaild category')
 
-    # 글 꼬리표 처리
-    
+    # 글 꼬리표 처리    
     if request.POST.has_key('tags') == True:
         tags = map(lambda str: str.strip(), unicode(request.POST['tags']).split(','))
         tag_list = map(lambda tag: TagModel.objects.get_or_create(Title=tag)[0], tags)
     else:
         tag_list = []
+
     #계정확인   &  이미지 업로드
     if request.method == 'POST':
         form = ImageUploadForm(request.POST, request.FILES)
