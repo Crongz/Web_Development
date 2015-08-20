@@ -8,11 +8,18 @@
         <div class="col-md-offset-1 col-md-10">
             <!-- Mini Reddit Post -->
             <!-- Title -->
+	    <div class ="pull-right">
+		<!-- Delete Post -->
+		{% if current_entry.User == request.user %}
+		<a href="/update/post/{{current_entry.id}}" class="glyphicon glyphicon-pencil"></a>
+		<a href="/delete/post/{{current_entry.id}}" class="glyphicon glyphicon-trash"></a>
+		{% endif %}
+	    </div>
             <h1>{{current_entry.Title}}</h1>
             <!-- Author -->
-            <p class="lead">
+            <div class=" lead">
                 by <a href="#">{{current_entry.User}}</a>
-            </p>
+            </div>
             <hr>
             <!-- Mini Reddit created Date -->
             <p><span class="glyphicon glyphicon-time"></span> Posted on {{current_entry.created}}</p>
@@ -26,6 +33,7 @@
             <hr>
             <p><strong>Category:</strong> {{current_entry.Category}}</p>
             <p><strong>Tag :</strong> {% for tag in current_entry.Tags.all %} {{tag.Title}} {% endfor %}</p>
+
             <!-- Comments -->
             <hr>
             <div>

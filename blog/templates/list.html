@@ -7,17 +7,19 @@
     {% for entry in entries %}
     <div class="post post-green">
         <strong><a href="/entry/{{entry.id}}"> {{entry.Title}} </strong></a> by <a href="">{{entry.User}} </a>
+	<div class="pull-right">
+		<!-- Delete Post -->
+		{% if entry.User == request.user %}
+		<a href="update/post/{{entry.id}}" class="glyphicon glyphicon-pencil"></a>
+		<a href="delete/post/{{entry.id}}" class="glyphicon glyphicon-trash"></a>
+		{% endif %}
+	</div>
 		<!-- Created Date-->  
         <div>Created: {{entry.created}}</div>
 		<!-- Number of comments-->  
         <div>
         	<a href="/get_comments/{{entry.id}}">{{entry.Comments}} comments</a>
         </div>
-		<!-- Delete Post -->
-	<div>
-		<a href="update/post/{{entry.id}}">Edit</a>
-		<a href="delete/post/{{entry.id}}">Delete</a>
-	</div>
     </div>
     {% endfor %}
 </div>

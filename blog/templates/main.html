@@ -16,7 +16,6 @@
 
 <body>
     <nav class="navbar navbar-inverse">
-        <div class="container">
             <!-- Navber -->  
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -31,7 +30,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/write">Write</a></li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <ul id="nav-right" class="nav navbar-nav navbar-right">
                     <!-- user is login, so show logout button -->  
                     {% if user.is_authenticated%}
                     <li class="navbar-right">
@@ -40,7 +39,7 @@
                     
                     {% else %}
                     <!-- user is not login, so show login form -->  
-                    <form method="post" action="/login/" class="navbar-form navbar-left" role="form">
+                    <form  method="post" action="/login/" class="navbar-form navbar-left" role="form">
                         {% csrf_token %}
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -60,7 +59,6 @@
                     </li>
                     {% endif %}
                 </ul>
-            </div>
         </div>
     </nav>
     {% block content%} 

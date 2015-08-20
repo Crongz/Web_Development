@@ -23,7 +23,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="control-label">Tag</label>
-                        <input type="tags" name="tags" class="form-control" placeholder="Tag" value="{% for tag in current_entry.Tags.all %} {{tag.Title}} {% endfor %}" id="tags"/>
+                        <input type="tags" name="tags" class="form-control" placeholder="Tag" value="{% for tag in current_entry.Tags.all %}{{tag.Title}},{% endfor %}" id="tags"/>
                         <p class="help-block">Split tags by using space ex)tag1 tag2 tag3</p>
                     </div>
                 </div>

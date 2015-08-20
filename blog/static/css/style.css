@@ -1,3 +1,19 @@
+.navbar-header{
+    padding-left:10px;
+}
+
+#nav-right li{
+    padding-right:10px;
+}
+
+.pull-right
+{
+    margin-top:1%;
+}
+.post .pull-right
+{
+    margin-top:0%;
+}
 .post a {
     color:inherit;
 }
